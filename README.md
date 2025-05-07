@@ -49,7 +49,13 @@ Only have one user, who is ADMIN.
 username: admin
 password: admin
 
-
+## rutas de contenedores 
+Servicio   	Puerto 
+ Jenkins         5000	8080
+ SonarQube   	 9000
+ Nexus       	 8081	
+ MySQL       	 3306   3333
+ ngrok           4040
 
 
 

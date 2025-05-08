@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "POSTION")
+@Table(name = "POSITION")
 public class Position implements Serializable {
     private static final long serialVersionUID = -8091879091924046847L;
     @Id

@@ -56,5 +56,5 @@ Servicio     	Puerto
  Nexus       	 8081	
  MySQL       	 3306   3333
  ngrok         4040
-
+.
 

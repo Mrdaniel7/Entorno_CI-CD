@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./Front-End
+      dockerfile: Dockerfile
+    image: host.docker.internal:5001/frontend:${APP_VERSION}
+    ports:
+      - "80:80"

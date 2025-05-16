@@ -3,7 +3,6 @@ FROM node:18-alpine AS build
 
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -17,7 +16,7 @@ FROM nginx:stable-alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copia la carpeta de build desde la fase anterior
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist/* /usr/share/nginx/html
 
 # Expone el puerto 80
 EXPOSE 80

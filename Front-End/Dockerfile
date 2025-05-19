@@ -19,6 +19,6 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/dist/* /usr/share/nginx/html
 
 # Expone el puerto 80
-EXPOSE 80
+EXPOSE 81
 
 # Usa el comando por defecto de Nginx

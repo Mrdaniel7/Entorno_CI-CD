@@ -39,7 +39,7 @@ export class AuthenticationService {
     }*/
 
     login(userName: string, password: string) {
-      const url = `${environment.apiBaseUrl}/login`;
+      const url = `${environment.apiBaseUrl}login`;
         console.log('URL construida para login:', url);
 
         

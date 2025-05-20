@@ -66,7 +66,10 @@ export class LoginComponent implements OnInit {
         });*/
         error => {
           console.error('Error en login:', error);
-          const errMsg = error?.error?.errMsg || error?.error?.message || error?.message || 'Ha ocurrido un error inesperado.';
+          const errMsg = (error && error.error && error.error.errMsg)
+            || (error && error.error && error.error.message)
+            || error.message
+            || 'Ha ocurrido un error inesperado.';
           this.toastr.error(errMsg, 'Error');
           this.loading = false;
         });

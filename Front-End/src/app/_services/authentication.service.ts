@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment'; // añadido para que se pueda encontrar enviroment
 
 import { User } from '../_models';
 
@@ -18,7 +19,7 @@ export class AuthenticationService {
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
-
+/*
     login(userName: string, password: string) {
         return this.http.post<any>(`login?userName=` + userName + `&password=` + password, {})
             .pipe(map(user => {
@@ -32,6 +33,20 @@ export class AuthenticationService {
 
                 return user.response.user;
             }));
+    }*/
+
+    login(userName: string, password: string) {
+      const url = `${environment.apiUrl}/login`;
+      return this.http.post<any>(url, { userName, password })
+        .pipe(map(user => {
+          console.log(user.response.user);
+          if (user && user.response.jwtResponse.token) {
+            localStorage.setItem('currentUser', JSON.stringify(user.response.user));
+            localStorage.setItem('token', user.response.jwtResponse.token);
+            this.currentUserSubject.next(user.response.user);
+          }
+          return user.response.user;
+        }));
     }
 
     logout() {

@@ -36,7 +36,7 @@ export class AuthenticationService {
     }*/
 
     login(userName: string, password: string) {
-      const url = `${environment.apiBaseUrl}/login`;
+      const url = `${environment.apiBaseUrl}login`;
       return this.http.post<any>(url, { userName, password })
         .pipe(map(user => {
           console.log(user.response.user);

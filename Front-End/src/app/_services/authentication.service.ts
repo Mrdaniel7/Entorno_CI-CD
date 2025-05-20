@@ -19,7 +19,7 @@ export class AuthenticationService {
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
-/*
+
     login(userName: string, password: string) {
         return this.http.post<any>(`login?userName=` + userName + `&password=` + password, {})
             .pipe(map(user => {
@@ -33,8 +33,8 @@ export class AuthenticationService {
 
                 return user.response.user;
             }));
-    }*/
-
+    }
+/*
     login(userName: string, password: string) {
       const url = `${environment.apiUrl}/login`;
       return this.http.post<any>(url, { userName, password })
@@ -47,7 +47,7 @@ export class AuthenticationService {
           }
           return user.response.user;
         }));
-    }
+    }*/
 
     logout() {
         // remove user data from local storage for log out

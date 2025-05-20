@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-//import { environment } from '../../environments/environment'; // añadido para que se pueda encontrar enviroment
+import { environment } from '../../environments/environment'; // añadido para que se pueda encontrar enviroment
 
 import { User } from '../_models';
 
@@ -19,7 +19,7 @@ export class AuthenticationService {
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
-
+/*
     login(userName: string, password: string) {
         return this.http.post<any>(`login?userName=` + userName + `&password=` + password, {})
             .pipe(map(user => {
@@ -33,10 +33,10 @@ export class AuthenticationService {
 
                 return user.response.user;
             }));
-    }
-/*
+    }*/
+
     login(userName: string, password: string) {
-      const url = `${environment.apiUrl}/login`;
+      const url = `${environment.apiBaseUrl}/login`;
       return this.http.post<any>(url, { userName, password })
         .pipe(map(user => {
           console.log(user.response.user);
@@ -47,7 +47,7 @@ export class AuthenticationService {
           }
           return user.response.user;
         }));
-    }*/
+    }
 
     logout() {
         // remove user data from local storage for log out

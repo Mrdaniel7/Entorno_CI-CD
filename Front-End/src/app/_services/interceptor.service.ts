@@ -29,7 +29,7 @@ export class InterceptorService implements HttpInterceptor {
     let clonedReq: HttpRequest<any>;
 
     // Only prepend apiBaseUrl if the request URL is relative
-     if (/^https?:\/\//i.test(req.url)) {
+    if (/^https?:\/\//i.test(req.url)) {
       // Absolute URL, don't modify it
       clonedReq = req.clone({
         setHeaders: { Authorization: `Bearer ${token}` }
@@ -41,6 +41,7 @@ export class InterceptorService implements HttpInterceptor {
         url: environment.apiBaseUrl + req.url
       });
     }
+
 
     return next.handle(clonedReq).pipe(
       catchError((error: HttpErrorResponse) => {

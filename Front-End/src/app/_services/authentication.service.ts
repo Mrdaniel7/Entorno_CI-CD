@@ -12,6 +12,9 @@ export class AuthenticationService {
     public currentUser: Observable<User>;
 
     constructor(private http: HttpClient) {
+        console.log('Entorno actual:', environment);
+
+        
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -37,8 +40,12 @@ export class AuthenticationService {
 
     login(userName: string, password: string) {
       const url = `${environment.apiBaseUrl}login`;
+        console.log('URL construida para login:', url);
+
+        
       return this.http.post<any>(url, { userName, password })
         .pipe(map(user => {
+            console.log('Respuesta del login:', user);
           console.log(user.response.user);
           if (user && user.response.jwtResponse.token) {
             localStorage.setItem('currentUser', JSON.stringify(user.response.user));

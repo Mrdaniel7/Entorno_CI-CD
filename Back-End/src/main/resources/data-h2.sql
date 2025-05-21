@@ -26,4 +26,4 @@ MERGE INTO type (type_id, name) KEY(type_id) VALUES
 
 -- usuarios de ejemplo
 MERGE INTO user (user_id, aciive, email, fist_name, last_name, password, user_name, pos_id, role_id) VALUES
-  (1, 1, 'admin@gmail.com', 'Admin', 'Admin', '$2a$10$zswmPMTPQx/haoyigz5z0uGCG37QjBHurv7LRMuEUnTUfVLgUXSu6', 'admin', 3, 1);
+  (1, 1, 'admin@gmail.com', 'Admin', 'Admin', 'admin', 'admin', 3, 1);

@@ -1,3 +1,5 @@
+
+
 import {
   HttpInterceptor,
   HttpRequest,
@@ -8,11 +10,10 @@ import {
 import { Observable, throwError } from "rxjs";
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { catchError } from 'rxjs/operators';
+import { retry, catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
   constructor(
@@ -25,30 +26,26 @@ export class InterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // Obtener token
-    const token = localStorage.getItem("token") || '';
-    const reqUrl = environment.apiBaseUrl;
-
-    // Sólo anteponer apiBaseUrl si la URL es relativa
-    if (req.url.startsWith('http://') || req.url.startsWith('https://')) {
-      // URL absoluta → sólo añade el header
-      req = req.clone({
-        setHeaders: { Authorization: `Bearer ${token}` }
-      });
+    let token: string
+    if (localStorage.getItem("token") === null) {
+      token = "";
     } else {
-      // URL relativa → antepone apiBaseUrl + añade header
-      req = req.clone({
-        setHeaders: { Authorization: `Bearer ${token}` },
-        url: reqUrl + req.url
-      });
+      token = localStorage.getItem("token")
     }
-
+    let reqUrl = environment.apiBaseUrl;
+    req = req.clone({
+      setHeaders: { "Authorization": "Bearer " + token },
+      url: reqUrl + "" + req.url
+    });
     return next.handle(req).pipe(
+      // retry(1),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          const errMsg = error?.error?.errMsg || 'Unauthorized';
-          this.router.navigate(['/login', { isError: true, errMsg, errDetail: '' }]);
+          // 401 handled in auth.interceptor
+          // this.toastr.error(error.error.errMsg); 
+          this.router.navigate(['/login', { isError: true, errMsg: error.error.errMsg, errDetail: error.error.errDetail}]);
           this.authenticationService.logout();
+
         }
         return throwError(error);
       })

@@ -1,7 +1,7 @@
 -- src/main/resources/data-h2.sql
 
 -- posiciones
-MERGE INTO position (pos_id, descption, pos_key) KEY(pos_id) VALUES
+MERGE INTO postion (pos_id, descption, pos_key) KEY(pos_id) VALUES
   (1, 'Developer', 'DEV'),
   (2, 'Quality',   'QA'),
   (3, 'Project Manger', 'PM');

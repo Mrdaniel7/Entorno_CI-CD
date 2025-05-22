@@ -43,7 +43,7 @@ export class AuthenticationService {
         console.log('URL construida para login:', url);
 
         
-      return this.http.post<any>(url, { userName, password })
+      return this.http.post<any>(url, { user_name, password })
         .pipe(map(user => {
             console.log('Respuesta del login:', user);
           console.log(user.response.user);

@@ -11,5 +11,5 @@ COPY target/*.jar app.jar
 EXPOSE 8080
 
 # Arranca la aplicación
-ENTRYPOINT ["java","-jar","/app/app.jar" , "--spring.profiles.active=h2"]
-
+ENTRYPOINT ["java","-jar","/app/app.jar" ]
+# , "--spring.profiles.active=h2"

@@ -35,8 +35,8 @@ public class AuthenticationController {
     private UserService userService;
 
 
-    @PostMapping("/authenticate")
-    /*public ResponseEntity<?> createAuthenticationToken(User user) throws Exception {*/
+    /*@PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(User user) throws Exception {*/
     /*public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception
 
         ResponseMessage responseMessage = ResponseMessage.getInstance();

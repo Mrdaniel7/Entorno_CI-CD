@@ -1,7 +1,6 @@
 package com.ismail.issuetracking.controller;
 
 import com.ismail.issuetracking.config.jwt.JwtTokenUtil;
-import com.ismail.issuetracking.dto.LoginRequest;
 import com.ismail.issuetracking.entity.User;
 import com.ismail.issuetracking.exception.IssueTrackingException;
 import com.ismail.issuetracking.model.JwtResponse;
@@ -11,6 +10,7 @@ import com.ismail.issuetracking.service.UserService;
 import com.ismail.issuetracking.service.impl.MyUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,29 +26,26 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
     @Autowired
     private MyUserDetailsService userDetailsService;
 
     @Autowired
     private UserService userService;
 
+
     @PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> createAuthenticationToken(User user) throws Exception {
+
         ResponseMessage responseMessage = ResponseMessage.getInstance();
-
         try {
-            authenticate(loginRequest.getUserName(), loginRequest.getPassword());
-
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUserName());
+            authenticate(user.getUserName(), user.getPassword());
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
             final String token = jwtTokenUtil.generateToken(userDetails);
 
-            User user = userService.findByUserName(loginRequest.getUserName());
+            user = userService.findByUserName(user.getUserName());
             JwtResponse jwtResponse = new JwtResponse(token);
-
             responseMessage.setResponse(new LoginResponse(user, jwtResponse));
         } catch (IssueTrackingException e) {
             responseMessage.setSuccess(false);
@@ -57,23 +54,7 @@ public class AuthenticationController {
             responseMessage.setSuccess(false);
             responseMessage.setErrMsg(e.getMessage());
         }
-
         return ResponseEntity.ok(responseMessage);
-    }
-
-    @PostMapping("/errorLogin")
-    public ResponseEntity<?> errorLogin(@RequestBody LoginRequest loginRequest) {
-        ResponseMessage responseMessage = ResponseMessage.getInstance();
-        try {
-            authenticate(loginRequest.getUserName(), loginRequest.getPassword());
-        } catch (ExpiredJwtException e) {
-            responseMessage.setSuccess(false);
-            responseMessage.setErrMsg(e.getMessage());
-        } catch (Exception e) {
-            responseMessage.setErrMsg(e.getMessage());
-            responseMessage.setSuccess(false);
-        }
-        return new ResponseEntity<>(responseMessage, HttpStatus.UNAUTHORIZED);
     }
 
     private void authenticate(String username, String password) throws Exception {
@@ -84,5 +65,20 @@ public class AuthenticationController {
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
+    }
+
+    @PostMapping("/errorLogin")
+    public ResponseEntity<?> success(User user) {
+        ResponseMessage responseMessage = ResponseMessage.getInstance();
+        try {
+            authenticate(user.getUserName(),user.getPassword());
+        } catch (ExpiredJwtException e) {
+            responseMessage.setSuccess(false);
+            responseMessage.setErrMsg(e.getMessage());
+        } catch (Exception e) {
+            responseMessage.setErrMsg(e.getMessage());
+            responseMessage.setSuccess(false);
+        }
+        return new ResponseEntity(responseMessage, HttpStatus.UNAUTHORIZED);
     }
 }

@@ -64,26 +64,29 @@ public class AuthenticationController {
     }*/
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
-    
-        ResponseMessage responseMessage = ResponseMessage.getInstance();
-        try {
-            authenticate(loginRequest.getUserName(), loginRequest.getPassword());
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUserName());
-            final String token = jwtTokenUtil.generateToken(userDetails);
-    
-            user = userService.findByUserName(user.getUserName());
-            JwtResponse jwtResponse = new JwtResponse(token);
-            responseMessage.setResponse(new LoginResponse(user, jwtResponse));
-        } catch (IssueTrackingException e) {
-            responseMessage.setSuccess(false);
-            responseMessage.setErrMsg(e.getMessage());
-        } catch (Exception e) {
-            responseMessage.setSuccess(false);
-            responseMessage.setErrMsg(e.getMessage());
-        }
-        return ResponseEntity.ok(responseMessage);
+public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
+
+    ResponseMessage responseMessage = ResponseMessage.getInstance();
+    try {
+        authenticate(loginRequest.getUserName(), loginRequest.getPassword());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUserName());
+        final String token = jwtTokenUtil.generateToken(userDetails);
+
+        // Aquí declaras la variable user y asignas el resultado
+        User user = userService.findByUserName(loginRequest.getUserName());
+
+        JwtResponse jwtResponse = new JwtResponse(token);
+        responseMessage.setResponse(new LoginResponse(user, jwtResponse));
+    } catch (IssueTrackingException e) {
+        responseMessage.setSuccess(false);
+        responseMessage.setErrMsg(e.getMessage());
+    } catch (Exception e) {
+        responseMessage.setSuccess(false);
+        responseMessage.setErrMsg(e.getMessage());
     }
+    return ResponseEntity.ok(responseMessage);
+}
+
 
 
     private void authenticate(String username, String password) throws Exception {

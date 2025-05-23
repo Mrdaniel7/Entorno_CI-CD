@@ -42,7 +42,7 @@ export class AuthenticationService {
       const url = `${environment.apiBaseUrl}login`;
         console.log('URL construida para login:', url);
 
-        console.log('Datos para login:', { user_name: userName, password });
+        console.log('Datos para login:', { userName, password });
       return this.http.post<any>(url, { user_name: userName, password })
         .pipe(map(user => {
             console.log('Respuesta del login:', user);

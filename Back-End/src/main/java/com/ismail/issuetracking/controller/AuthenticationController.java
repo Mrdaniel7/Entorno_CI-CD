@@ -69,7 +69,7 @@ public class AuthenticationController {
             final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUserName());
             final String token = jwtTokenUtil.generateToken(userDetails);
     
-            User user = userService.findByUserName(loginRequest.getUserName());
+            user = userService.findByUserName(user.getUserName());
             JwtResponse jwtResponse = new JwtResponse(token);
             responseMessage.setResponse(new LoginResponse(user, jwtResponse));
         } catch (IssueTrackingException e) {

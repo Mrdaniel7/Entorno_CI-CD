@@ -76,16 +76,6 @@
                     </div>
                 </div>
 
-                <!-- … justo después del select de Role … -->
-                <div class="form-group form-check">
-                    <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="active"
-                    formControlName="active">
-                    <label class="form-check-label" for="active">Activo</label>
-                </div>
-
                 <div class="form-group">
                     <button *ngIf="userId == -1" [disabled]="loading" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>

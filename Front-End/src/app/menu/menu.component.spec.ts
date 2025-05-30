@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MenuComponent } from './menu.component';
+import { RouterTestingModule }               from '@angular/router/testing';
+import { MenuComponent }                     from './menu.component';
+import { AppModule }                         from '../app.module';
+import { CUSTOM_ELEMENTS_SCHEMA }            from '@angular/core';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -8,7 +10,13 @@ describe('MenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuComponent ]
+      imports: [
+        RouterTestingModule,
+        AppModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     })
     .compileComponents();
   }));

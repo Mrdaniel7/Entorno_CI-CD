@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CustomModalComponent } from './custom-modal.component';
+import { RouterTestingModule }               from '@angular/router/testing';
+import { CustomModalComponent }              from './custom-modal.component';
+import { AppModule }                         from '../../app.module';
+import { CUSTOM_ELEMENTS_SCHEMA }            from '@angular/core';
 
 describe('CustomModalComponent', () => {
   let component: CustomModalComponent;
@@ -8,7 +10,8 @@ describe('CustomModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomModalComponent ]
+      imports: [ RouterTestingModule, AppModule ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));

@@ -5,7 +5,6 @@ export class User {
   email: string;
   userName: string;
   password: string;
-  active: boolean;          // ← nueva propiedad
   positionId: number;
   roleId: number
   position: Position;
@@ -33,7 +32,6 @@ export class User {
     // this.roleId=roleId;
     this.position=position,
     this.role=role;
-    this.active = true;     // valor por defecto al crear
   }
 
 }

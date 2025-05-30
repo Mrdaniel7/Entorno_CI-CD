@@ -31,25 +31,10 @@ export class InterceptorService implements HttpInterceptor {
       token = localStorage.getItem("token")
     }
     let reqUrl = environment.apiBaseUrl;
-    /*
     req = req.clone({
       setHeaders: { "Authorization": "Bearer " + token },
       url: reqUrl + "" + req.url
-    });*/
-
-    if (req.url.startsWith('http://') || req.url.startsWith('https://')) {
-      // Si la URL ya es absoluta, no le añadas nada, solo el header
-      req = req.clone({
-        setHeaders: { "Authorization": "Bearer " + token }
-      });
-    } else {
-      // Si es una URL relativa, prepende la base
-      req = req.clone({
-        setHeaders: { "Authorization": "Bearer " + token },
-        url: reqUrl + req.url
-      });
-    }
-    
+    });
     return next.handle(req).pipe(
       // retry(1),
       catchError((error: HttpErrorResponse) => {

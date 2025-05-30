@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UsersComponent } from './users.component';
+import { RouterTestingModule }               from '@angular/router/testing';
+import { UsersComponent }                    from './users.component';
+import { AppModule }                         from '../app.module';
+import { CUSTOM_ELEMENTS_SCHEMA }            from '@angular/core';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -8,7 +10,13 @@ describe('UsersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UsersComponent ]
+      imports: [
+        RouterTestingModule,
+        AppModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     })
     .compileComponents();
   }));

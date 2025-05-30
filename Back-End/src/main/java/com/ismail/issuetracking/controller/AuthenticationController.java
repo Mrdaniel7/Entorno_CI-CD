@@ -20,9 +20,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import com.ismail.issuetracking.dto.LoginRequest;
-
-
 @RestController
 @CrossOrigin
 public class AuthenticationController {
@@ -38,18 +35,15 @@ public class AuthenticationController {
     private UserService userService;
 
 
-    /*@PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(User user) throws Exception {*/
-    /*public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(User user) throws Exception {
 
         ResponseMessage responseMessage = ResponseMessage.getInstance();
         try {
-            
             authenticate(user.getUserName(), user.getPassword());
             final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
             final String token = jwtTokenUtil.generateToken(userDetails);
 
-            
             user = userService.findByUserName(user.getUserName());
             JwtResponse jwtResponse = new JwtResponse(token);
             responseMessage.setResponse(new LoginResponse(user, jwtResponse));
@@ -61,33 +55,7 @@ public class AuthenticationController {
             responseMessage.setErrMsg(e.getMessage());
         }
         return ResponseEntity.ok(responseMessage);
-    }*/
-
-    @PostMapping("/authenticate")
-public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
-
-    ResponseMessage responseMessage = ResponseMessage.getInstance();
-    try {
-        authenticate(loginRequest.getUserName(), loginRequest.getPassword());
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUserName());
-        final String token = jwtTokenUtil.generateToken(userDetails);
-
-        // Aquí declaras la variable user y asignas el resultado
-        User user = userService.findByUserName(loginRequest.getUserName());
-
-        JwtResponse jwtResponse = new JwtResponse(token);
-        responseMessage.setResponse(new LoginResponse(user, jwtResponse));
-    } catch (IssueTrackingException e) {
-        responseMessage.setSuccess(false);
-        responseMessage.setErrMsg(e.getMessage());
-    } catch (Exception e) {
-        responseMessage.setSuccess(false);
-        responseMessage.setErrMsg(e.getMessage());
     }
-    return ResponseEntity.ok(responseMessage);
-}
-
-
 
     private void authenticate(String username, String password) throws Exception {
         try {

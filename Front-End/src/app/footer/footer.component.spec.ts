@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FooterComponent } from './footer.component';
+import { RouterTestingModule }               from '@angular/router/testing';
+import { FooterComponent }                   from './footer.component';
+import { AppModule }                         from '../app.module';
+import { CUSTOM_ELEMENTS_SCHEMA }            from '@angular/core';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -8,7 +10,13 @@ describe('FooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FooterComponent ]
+      imports: [
+        RouterTestingModule,
+        AppModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     })
     .compileComponents();
   }));

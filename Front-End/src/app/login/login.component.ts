@@ -59,10 +59,20 @@ export class LoginComponent implements OnInit {
         data => {
           this.router.navigate([this.returnUrl]);
         },
-        error => {
+        /*error => {
           // console.log(error.error.errMsg)
           this.toastr.error(error.error.errMsg, 'Error');
           this.loading = false;
+        });*/
+        error => {
+          console.error('Error en login:', error);
+          const errMsg = (error && error.error && error.error.errMsg)
+            || (error && error.error && error.error.message)
+            || error.message
+            || 'Ha ocurrido un error inesperado.';
+          this.toastr.error(errMsg, 'Error');
+          this.loading = false;
         });
+    
   }
 }

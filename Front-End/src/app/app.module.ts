@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { IssueComponent } from './issue/issue.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { MatIconModule, MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule } from '@angular/material';
+import 'ag-grid-enterprise';
 import { CreateIssueComponent } from './create-issue/create-issue.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';

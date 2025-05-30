@@ -5,20 +5,14 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-  public currentUser: any;
-  public loading = false;  // ← aquí defines la propiedad
+  public currentUser;
+  public loading: boolean = false; // <-- ¡Añade esta línea para definir la propiedad 'loading'!
 
   constructor() {
-    const stored = localStorage.getItem('currentUser');
-    this.currentUser = stored ? JSON.parse(stored) : '';
+    this.currentUser = localStorage.getItem('currentUser')? JSON.parse(localStorage.getItem('currentUser')) : '';
   }
 
   ngOnInit() {
-    // Si vas a usar loading para controlar un spinner, 
-    // podrías hacer algo así:
-    this.loading = true;
-    // …llamar a tu servicio…
-    // al recibir la respuesta:
-    // this.loading = false;
   }
+
 }

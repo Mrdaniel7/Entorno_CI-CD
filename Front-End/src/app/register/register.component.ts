@@ -38,7 +38,8 @@ export class RegisterComponent implements OnInit {
       userName: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       roleId: ['', Validators.required],
-      positionId: ['', Validators.required]
+      positionId: ['', Validators.required],
+      active: [true]   // ← nuevo control
     });
 
     this.getRoles();
